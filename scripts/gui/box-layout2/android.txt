@@ -1,0 +1,3 @@
+title=Box_Layout2
+author=Pink Python
+orientation=portrait

@@ -1,0 +1,17 @@
+<h1>About Me</h1>
+
+{%if name!='' and age !=''%}
+<p>My Name Is : {{name}}</p>
+<p>My Age Is  : {{age}}</p>
+{%else%}
+<p>no information providied</p>
+{%endif%}
+
+<h1>Favourite Colors</h1>
+<ul>
+{% for color in colors %}
+  <li style="color:{{color}}">{{color}}</li>
+{% endfor %}
+</ul>
+
+<p><a href='{{request.script_root}}/'>Home</a></p>

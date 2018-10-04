@@ -1,0 +1,3 @@
+title=Label
+author=Pink Python
+orientation=portrait

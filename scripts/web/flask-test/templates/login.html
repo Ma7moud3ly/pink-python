@@ -1,0 +1,12 @@
+{%if incorrect%}
+<h3>Inccorect Email Or Password !</h3>
+{%endif%}
+<form action="" method="post">	
+<input type="email" name='email' placeholder="Email" required>
+<input type="password" name='password' placeholder="Password" required>
+<button type="submit">Submit</button>
+</form>
+<p><a href='{{request.script_root}}/'>Home</a></p>
+
+
+

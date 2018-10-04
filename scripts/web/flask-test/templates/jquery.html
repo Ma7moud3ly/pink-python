@@ -1,0 +1,11 @@
+<script src="{{url_for('static', filename='jquery.min.js')}}"></script>
+<script>
+$(document).ready(function(){
+    $("#btn").click(function(){
+       alert('{{msg}}')
+    });
+});
+</script>
+
+<button id="btn">Click Me</button>
+<p><a href='{{request.script_root}}/'>Home</a></p>

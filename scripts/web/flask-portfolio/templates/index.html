@@ -1,0 +1,486 @@
+<!--
+Falsk - Python Editable Portfolio.
+By Mahmoud aly .. ma7moud3ly2012@gmail.com
+Template : https://startbootstrap.com/template-overviews/freelancer
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<title>{{data.get('title','Editable Portfolio')}}</title>
+
+	<!-- Bootstrap core CSS -->
+	<link href="{{url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+
+	<!-- Custom fonts for this template -->
+	<link href="{{url_for('static', filename='vendor/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" type="text/css">
+
+	<!-- Plugin CSS -->
+	<link href="{{url_for('static', filename='vendor/magnific-popup/magnific-popup.css')}}" rel="stylesheet" type="text/css">
+
+	<!-- Custom styles for this template -->
+	<link href="{{url_for('static', filename='css/freelancer.min.css')}}" rel="stylesheet">
+
+	<style type="text/css">
+	.editable{font-size:14px;color:red;font-weight:normal;float:left;}
+	#editmodal-old-value{
+		max-width:200px;
+		overflow:hidden;
+		display:inline-block;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	#edit{
+		position:absolute;
+		display:none;
+		left:0;
+		top:0;
+		color: red;
+		font-size:30px;
+		z-index: 10000;
+	}
+
+	.addmodal-image-container{position:relative;}
+	.addmodal-image-container>img{width:200px;height:180px}
+	.addmodal-image-container>input{position:absolute;left:calc(50% - 50px);width:100px;top:90px;cursor:pointer}
+
+	.fa-trash-o:hover{color:red;}
+	.profile-container{position:relative;}
+	.profile-container>form{position:absolute;top:70%;left:calc(50% - 50px);max-width:100px;display:none}
+	.profile-container>img{max-width:256px;max-height:256px;width:256px;height:256px;;border-radius:100%}
+</style>
+
+</head>
+
+<body id="page-top">
+
+	<a data-toggle="modal" id="edit" data-target="#editmodal" href="#"><i class="fa fa-edit"></i></a>
+
+	<!-- Navigation -->
+	<nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
+		<div class="container">
+			<a  href="#page-top" class="navbar-brand js-scroll-trigger editable-field" id="title">{{data.get('title','Portfolio Header')}}</a>
+			<button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+				Menu
+				<i class="fa fa-bars"></i>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarResponsive">
+				<ul class="navbar-nav ml-auto">
+					{%if admin%}
+					<li class="nav-item mx-0 mx-lg-1">
+						<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{{request.script_root}}/logout/">Logout</a>
+					</li>
+					{%endif%}
+					{%if admin==False%}
+					<li class="nav-item mx-0 mx-lg-1">
+						<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{{request.script_root}}/login/">Login</a>
+					</li>
+					{%endif%}
+					<li class="nav-item mx-0 mx-lg-1">
+						<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"  href="#portfolio-sec">Portfolio</a>
+					</li>
+					<li class="nav-item mx-0 mx-lg-1">
+						<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about-sec">About</a>
+					</li>
+					<li class="nav-item mx-0 mx-lg-1">
+						<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contact-sec">Contact</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<!-- Header -->
+	<header class="masthead bg-primary text-white text-center">
+		<div class="container">
+			<div class='profile-container'>
+				<img class="img-fluid mb-5 d-block mx-auto" src="{{url_for('static', filename='img')}}/{{data.get('profile','admin-logo.png')}}" alt="Profile">
+				{%if admin%}
+				<form  action="{{request.script_root}}/change_profile/" method="post" enctype="multipart/form-data">
+					<input style="max-width:100px;" type="file" name="profile" onchange="this.form.submit()" accept="image/*">
+				</form>
+				{%endif%}
+			</div>
+			<h1 class="text-uppercase mb-0 editable-field" id="header">{{data.get('header','Edit')}}</h1>
+			<hr class="star-light">
+			<h2 class="font-weight-light mb-0 editable-field" id="description">{{data.get('description','Python - Falsk - Bootstrap')}}</h2>
+		</div>
+	</header>
+
+	<!-- Portfolio Grid Section -->
+	<section class="portfolio" id="portfolio-sec">
+		<div class="container">
+			<h2 class="text-center text-uppercase text-secondary mb-0 editable-field" id="projects_title">{{data.get('projects_title','PORTFOLIO
+			')}}</h2>
+			{%if admin%}
+			<button type="button" class="btn btn-outline-info" data-toggle="modal" id="add-project" data-target="#addmodal">Add</button>
+			{%endif%}
+			<hr class="star-dark mb-5">
+			<div class="row">
+				{%for id in data.projects%}
+				<div class="col-md-6 col-lg-4">
+					<a class="portfolio-item d-block mx-auto" id="{{id}}"" href="#portfolio-modal" >
+						<div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
+							<div class="data.portfolio-item-caption-content my-auto w-100 text-center text-white">
+								<i class="fa fa-search-plus fa-3x"></i>
+							</div>
+						</div>
+						<img class="img-fluid" src="{{url_for('static', filename='img')}}/{{data.projects[id].image}}" alt="">
+					</a>
+				</div>
+				{%endfor%}
+			</div>
+		</div>
+	</section>
+
+	<script>
+		var projects={
+			{%for id in data.projects%}
+			'{{id}}':{'name':'{{data.projects[id].name}}','description':'{{data.projects[id].description}}','image':'{{data.projects[id].image}}'},
+			{%endfor%}
+		}
+	</script>
+
+	<!-- About Section -->
+	<section class="bg-primary text-white mb-0" id="about-sec">
+		<div class="container">
+			<h2 class="text-center text-uppercase text-white editable-field" id="about">{{data.get('about','About')}}</h2>
+			<hr class="star-light mb-5">
+			<div class="row">
+				<div class="col-lg-6 editable-field" id="about_text1">
+					<p class="lead text-center">{{data.get('about_text1','Edit')}}</p>
+				</div>
+				<div class="col-lg-6 editable-field" id="about_text2">
+					<p class="lead text-center">{{data.get('about_text2','Edit')}}</p>
+				</div>
+			</div>
+			<br>
+			<div class="row">
+				<div class="mx-auto">
+					<ul class="list-inline mb-0 mx-auto">
+						<li class="list-inline-item">
+							<a target="_black" class="btn btn-outline-light btn-social text-center rounded-circle editable-field" id="social_fb" href="http://www.facebook.com/{{data.social_fb}}">
+								<i class="fa fa-fw fa-facebook"></i>
+							</a>
+						</li>
+						<li class="list-inline-item">
+							<a target="_black" class="btn btn-outline-light btn-social text-center rounded-circle editable-field" id="social_google" href="https://plus.google.com/{{data.social_google}}">
+								<i class="fa fa-fw fa-google-plus"></i>
+							</a>
+						</li>
+						<li class="list-inline-item">
+							<a target="_black" class="btn btn-outline-light btn-social text-center rounded-circle editable-field" id="social_twitter" href="http://twitter.com/{{data.social_twitter}}">
+								<i class="fa fa-fw fa-twitter"></i>
+							</a>
+						</li>
+						<li class="list-inline-item">
+							<a target="_black" class="btn btn-outline-light btn-social text-center rounded-circle editable-field" id="social_linkedin" href="http://linkedin.com/in/{{data.social_linkedin}}">
+								<i class="fa fa-fw fa-linkedin"></i>
+							</a>
+						</li>
+						<li class="list-inline-item">
+							<a target="_black" class="btn btn-outline-light btn-social text-center rounded-circle editable-field" id="social_github" href="http://github.com/{{data.social_github}}">
+								<i class="fa fa-fw fa-github"></i>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Contact Section -->
+	<section id="contact-sec">
+		<div class="container">
+			<h2 class="text-center text-uppercase text-secondary mb-0 editable-field" id="contact">{{data.get('contact','CONTACT ME
+			')}}</h2>
+			<hr class="star-dark mb-5">
+			<div class="row">
+				<div class="col-lg-8 mx-auto">
+					<form name="sentMessage" id="contactForm" novalidate="novalidate">
+						<div class="control-group">
+							<div class="form-group floating-label-form-group controls mb-0 pb-2">
+								<label>Name</label>
+								<input class="form-control"  id="name" type="text" placeholder="Name" required="">
+								<p class="help-block text-danger"></p>
+							</div>
+						</div>
+						<div class="control-group">
+							<div class="form-group floating-label-form-group controls mb-0 pb-2">
+								<label>Email Address</label>
+								<input class="form-control" id="email" type="email" placeholder="Email Address" required="">
+								<p class="help-block text-danger"></p>
+							</div>
+						</div>
+						<div class="control-group">
+							<div class="form-group floating-label-form-group controls mb-0 pb-2">
+								<label>Phone Number</label>
+								<input class="form-control"  id="phone" type="tel" placeholder="Phone Number" required="" >
+								<p class="help-block text-danger"></p>
+							</div>
+						</div>
+						<div class="control-group">
+							<div class="form-group floating-label-form-group controls mb-0 pb-2">
+								<label>Message</label>
+								<textarea class="form-control" id="message" rows="5" placeholder="Message" required="""></textarea>
+								<p class="help-block text-danger"></p>
+							</div>
+						</div>
+						<br>
+						<div id="success"></div>
+						<div class="form-group">
+							<button type="submit" class="btn btn-primary btn-xl">Send</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Footer -->
+	<div class="copyright py-4 text-center text-white">
+		<div class="container">Copyright © 
+			<small class="editable-field" id="copyright">{{data.get('copyright','Your Website 2018')}}</small>
+		</div>
+	</div>
+
+	<!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+	<div class="scroll-to-top d-lg-none position-fixed ">
+		<a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top">
+			<i class="fa fa-chevron-up"></i>
+		</a>
+	</div>
+
+	<!-- Modals -->
+
+	<div class="portfolio-modal mfp-hide" id="portfolio-modal">
+		<div class="portfolio-modal-dialog bg-white">
+			<a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
+				<i class="fa fa-3x fa-times"></i>
+			</a>
+			<div class="container text-center">
+				<div class="row">
+					<div class="col-lg-8 mx-auto">
+						<h2 class="text-secondary text-uppercase mb-0" id="modal-project-name">Project Name</h2>
+						<hr class="star-dark mb-5">
+						<img class="img-fluid mb-5" id="modal-project-image" src="" alt="Project Image">
+						<h4 class="mb-5" id='modal-project-description'></h4>
+						<a class="btn btn-primary btn-sm rounded-pill portfolio-modal-dismiss" href="#">
+							<i class="fa fa-close"></i>
+							Close Project
+						</a>
+						{%if admin%}
+						<a class="btn btn-primary btn-sm bg-danger portfolio-modal-dismiss" id="del-project" href="#">
+							<i class="fa fa-trash-o"></i>Delete Project
+						</a>
+						{%endif%}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{%if admin%}
+	<!--edit field modal-->
+	<div class="modal" id="editmodal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Edit Field</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="form-group" style="margin:10px">
+					<textarea id="editmodal-value"  class="form-control" placeholder="New Value"></textarea>
+					<input id="editmodal-filed-id" type="hidden" class="form-control">
+				</div>
+				<div class="modal-footer">
+					<button type="button" id="save" class="btn btn-success" data-dismiss="modal">Save</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!--add project modal-->
+	<div class="modal" id="addmodal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Add Project</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<form class="form-group" action="{{request.script_root}}/add_project/" method="post" enctype="multipart/form-data">
+					<div class="form-group" style="margin:10px">
+						<div class="m-3">
+							<input type="file" name="addmodal-image" id="addmodal-image" accept="image/*">
+						</div>
+						<div class="m-3">
+							<input name="addmodal-name" type="text" class="form-control" placeholder="Project Name">
+						</div>
+						<div class="m-3">
+							<textarea name="addmodal-description"  class="form-control" placeholder="Project Description"></textarea>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-success">Upload</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	{%endif%}
+
+	<!-- login modal -->
+	{%if login%}
+	<div class="modal" style="display:block;" id="modal-admin">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Admin Login</h4>
+					<button type="button" class="close" data-dismiss="modal"
+					onclick="document.getElementById('modal-admin').style.display='none'">&times;
+				</button>
+			</div>
+			{%if login%}		
+			{%if login_error%}
+			<div class="alert alert-danger">incorrect email or password !</div>
+			{%endif%}
+			{%endif%}
+			<form action="{{request.script_root}}/login/" method="post">
+				<div class="form-group m-2">
+					<input name="email" type="email" class="form-control" placeholder="Email Address" required="">
+				</div>
+				<div class="form-group m-2">
+					<input name="pass" type="password" class="form-control" placeholder="User Name" required="">
+				</div>
+				<div class="modal-footer">
+					<button type="submit"class="btn btn-success" >Login</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	{%endif%}
+</body>
+
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="{{url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+<!-- Plugin JavaScript -->
+<script type="text/javascript" src="{{url_for('static', filename='vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static', filename='vendor/magnific-popup/jquery.magnific-popup.min.js')}}"></script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+
+<!-- Contact Form JavaScript -->
+<script type="text/javascript" src="{{url_for('static', filename='js/jqBootstrapValidation.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static', filename='js/contact_me.js')}}"></script>
+
+<!-- Custom scripts for this template -->
+<script type="text/javascript" src="{{url_for('static', filename='js/freelancer.min.js')}}"></script>
+
+
+
+<script  type="text/javascript">
+
+
+	$(document).ready(function(){     
+        //show project in portfolio
+		$(".portfolio-item").click(function(){
+			var id=$(this).attr('id')
+			$("#modal-project-name").text(projects[id].name)
+			$("#modal-project-description").text(projects[id].description)
+			$("#modal-project-image").attr("src",'{{url_for('static', filename='img')}}/'+projects[id].image)
+			$("#del-project").attr('data-id',id)
+
+		});
+
+		{%if admin%}
+		$SCRIPT_ROOT = {{ request.script_root|tojson|safe}};
+
+		/*edit*/
+
+		$('.editable-field').mousemove(function(e){
+			var pos=$(this).position()
+			//var left=(parseInt($(this).css('width')))+pos.left+10;
+		    left=e.pageX
+			var top=pos.top+20;
+			$("#edit").css({left:left,top:top});
+			$("#edit").show()
+			field_to_edit=$(this);
+		})
+
+		$('.profile-container').on('mouseover',function(){
+			$('.profile-container>form').show();
+		})
+		$('.profile-container').on('mouseleave',function(){
+			$('.profile-container>form').hide();
+		})
+
+		$('#edit').on('mouseover',function(){
+			if(hide_timer!=null)clearTimeout(hide_timer);
+		})
+		$('#edit').on('mouseleave',function(){
+			$("#edit").hide()
+			field_to_edit=null;
+		})
+		var hide_timer,field_to_edit;
+		$('.editable-field').on('mouseleave',function(){
+			if(hide_timer!=null)clearTimeout(hide_timer);
+			hide_timer=setTimeout(function() {
+				$("#edit").hide()
+			}, 400);
+		})
+
+		$("#edit").click(function(){
+			clearTimeout(hide_timer);
+			$("#edit").hide()
+			if(field_to_edit!=null){
+				var val=field_to_edit.text();
+				var id=field_to_edit.attr('id');
+				$("#editmodal-value").val(val.trim());
+				$("#editmodal-filed-id").val(id);
+			}
+			field_to_edit=null;
+		})
+
+		/*******/
+
+		//save project
+		$('#save').click(function(){
+			var key=$("#editmodal-filed-id").val();
+			var val=$("#editmodal-value").val();
+			if(key.indexOf('socail')==-1)
+				$("#"+key).text(val);
+			$.get($SCRIPT_ROOT+'/save_values/'+key+'/'+val, function(data, status){
+				toastr.info(data)
+			});
+		});
+
+        //remove project 
+        $('#del-project').click(function(){
+        	var id=$(this).attr('data-id');
+        	$.get($SCRIPT_ROOT+'/del_project/'+id, function(data, status){
+        		toastr.info(data)
+        		if(data=='done')$('#'+id).remove();
+        	});
+        });
+        {%endif%}
+
+    })
+</script>
+
+</body>
+
+</html>

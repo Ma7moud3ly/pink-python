@@ -1,0 +1,23 @@
+<h1>Hello ^_^</h1>
+
+{%if admin%}
+<h4>You Are the SuperUser Of the Website</h4>
+{%endif%}
+
+<p>Local Time : {{time}} </p>
+
+<p>Operating System : {{os}}   </p>
+
+
+<ul>
+	<li><a href="{{request.script_root}}/home">Home</a></li>
+	<li><a href="{{request.script_root}}/about">About</a></li>
+	<li><a href="{{request.script_root}}/jquery">Jquery</a></li>
+	<li><a href="{{request.script_root}}/form">Form</a></li>
+	<li><a href="{{request.script_root}}/upload">Upload</a></li>
+	{%if admin%}
+	<li><a href="{{request.script_root}}/logout">Logout</a></li>
+	{%else%}	
+	<li><a href="{{request.script_root}}/login">Login</a></li>
+	{%endif%}
+</ul>

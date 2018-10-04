@@ -1,0 +1,3 @@
+title=Kivy Test
+author=Mahmoud
+orientation=portrait

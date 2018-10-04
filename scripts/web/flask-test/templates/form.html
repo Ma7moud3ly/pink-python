@@ -1,0 +1,17 @@
+<h1>Falsk Calculator</h1>
+<form action="" method="post">	
+   <input type="number" name='num1' value="{{num1}}" requird>
+   <select name="opr">
+      <option>+</option>
+      <option>-</option>
+      <option>*</option>
+      <option>/</option>
+	  <option>%</option>
+      <option>**</option>
+   </select>
+   <input type="number" name='num2' value="{{num2}}" requird>
+   <label>{{result}}</label><br><br>
+   <button type="submit">Calc</button>
+</form>
+<p><a href='{{request.script_root}}/'>Home</a></p>
+

@@ -1,0 +1,6 @@
+Brief history
+
+Tesseracl was originany deve‘oped at Hew‘eanackard Laboratories Bristo‘ and at Hewleanackard Co, Greeley Colorado
+between 1985 and 1994, with some more changes made in 1995 to port to Windows, and some C++izing in 1998. In 2005
+Tesseracl was open sourced by HP. Since 2006 n is developed by Gcog‘e.
+

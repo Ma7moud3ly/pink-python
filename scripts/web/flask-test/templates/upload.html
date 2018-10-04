@@ -1,0 +1,17 @@
+<h1>File Upload</h1>
+{%if done%}
+<div>done uploading 
+   <strong>
+   	<a target="_blank" href="{{request.script_root}}/static/uploads/{{file}}">{{file}}</a>
+   </strong> 
+   <p><a href="{{request.script_root}}/upload">back<a></p>
+</div>
+{%else%}
+<form action="" method="post" enctype="multipart/form-data">
+<input type="file" name="myfile" required>
+<br><br>
+<button type="submit" >Upload</button>
+</form>
+{%endif%}
+
+<p><a href='{{request.script_root}}/'>Home</a></p>

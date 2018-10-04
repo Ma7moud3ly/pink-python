@@ -1,0 +1,3 @@
+title=Float_Layout
+author=Pink Python
+orientation=portrait

@@ -1,0 +1,3 @@
+title=Anchor_Layout
+author=Pink Python
+orientation=portrait
