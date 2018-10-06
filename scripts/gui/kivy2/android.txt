@@ -1,3 +1,0 @@
-title=Kivy2
-author=Pink Python
-orientation=portrait

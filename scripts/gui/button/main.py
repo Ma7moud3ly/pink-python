@@ -10,9 +10,9 @@ class myApp(App):
          layout=BoxLayout()
          btn=Button(
 	      text="Press On Me",
-              color=(1,0,0,1), #red
-              background_color=(0,1,0,1), #green
-              font_size=70,
+              color=(0,0,0,1), #black
+              background_color=(1,1,1,1), #white
+              font_size=100,
               size_hint=(1,0.5),
               pos_hint={'y':0.25},
               on_press=self.press,

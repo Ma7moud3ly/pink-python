@@ -1,3 +1,0 @@
-title=Kivy Toggle
-author=Mahmoud
-orientation=portrait
